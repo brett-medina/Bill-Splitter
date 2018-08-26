@@ -9,6 +9,9 @@
 import UIKit
 
 class LoggedInViewController: UIViewController {
+    
+    var cashTotal: Integer
+    var numFriends: Integer
 
     override func viewDidLoad() {
         super.viewDidLoad()
