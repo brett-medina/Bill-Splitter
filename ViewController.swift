@@ -15,34 +15,45 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var emailAddressField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
+    @IBOutlet weak var invalidLoginLabel: UILabel!
     
     @IBAction func touchLogin(_ sender: UIButton) {
-
-        performSegue(withIdentifier: "login", sender: self)
+        handleLogin()
     }
     
     @IBAction func touchSignUp(_ sender: UIButton) {
+        performSegue(withIdentifier: "createNewAccount", sender: self)
     }
     
     override func viewDidLoad() {
-        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
-        tap.cancelsTouchesInView = false
-        self.view.addGestureRecognizer(tap)
-        // used to hide keyboard on return press
-        emailAddressField.delegate = self
-        passwordField.delegate = self
-        
+        hideKeyboardOnViewPress()
         // caches login. auto login if already logged in
         if Auth.auth().currentUser != nil {
             performSegue(withIdentifier: "login", sender: self)
         }
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func hideKeyboardOnViewPress() {
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
+        tap.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tap)
+        emailAddressField.delegate = self
+        passwordField.delegate = self
+    }
+    
+    func handleLogin() {
+        guard let email = emailAddressField.text else {return}
+        guard let pass = passwordField.text else {return}
+        
+        Auth.auth().signIn(withEmail: email, password: pass) { user, error in
+            if (error == nil && user != nil) {
+                self.performSegue(withIdentifier: "login", sender: self)
+            } else {
+                self.invalidLoginLabel.text = "Invalid email and/or password"
+            }
+            
+        }
     }
 
     // hide keyboard on return press
