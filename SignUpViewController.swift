@@ -8,8 +8,9 @@
 
 import UIKit
 import Firebase
+import FirebaseAuth
 
-class SignUpViewController: UIViewController {
+class SignUpViewController: UIViewController, UITextFieldDelegate {
 
 
     @IBOutlet weak var nameField: UITextField!
@@ -27,9 +28,20 @@ class SignUpViewController: UIViewController {
     func handleLogin() {
         guard let email = emailField.text else {return}
         guard let pass = passwordField.text else {return}
+        guard let userName = nameField.text else {return}
+        
         Auth.auth().createUser(withEmail: email, password: pass) { user, error in
             if error == nil && user != nil {
                 print("user created!")
+                
+                let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+                changeRequest?.displayName = userName
+                changeRequest?.commitChanges() { error in
+                    if error == nil {
+                        print("User display name changed!")
+                    }
+                    
+                }
             } else {
                 print("Error creating user: \(error!.localizedDescription)")
             }
@@ -42,6 +54,12 @@ class SignUpViewController: UIViewController {
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
         tap.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tap)
+        
+        // Hide keyboard on return press
+        nameField.delegate = self
+        emailField.delegate = self
+        passwordField.delegate = self
+        
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
@@ -49,6 +67,14 @@ class SignUpViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // UITextFieldDelegate methods
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        nameField.resignFirstResponder()
+        emailField.resignFirstResponder()
+        passwordField.resignFirstResponder()
+        return true
     }
     
 
