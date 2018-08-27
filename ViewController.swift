@@ -52,7 +52,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
             } else {
                 self.invalidLoginLabel.text = "Invalid email and/or password"
             }
-            
+            self.emailAddressField.text = ""
+            self.passwordField.text = ""
         }
     }
 

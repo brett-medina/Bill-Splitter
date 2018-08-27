@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import Firebase
 
 class DivideViewController: UIViewController {
     
@@ -17,6 +19,13 @@ class DivideViewController: UIViewController {
     @IBOutlet weak var totalAmountOutlet: UITextField!
     @IBOutlet weak var numFriendsOutlet: UITextField!
     @IBOutlet weak var resultOutlet: UILabel!
+    
+    @IBAction func logoutButton(_ sender: UIButton) {
+        try! Auth.auth().signOut()
+        self.dismiss(animated: false, completion: nil)
+        self.totalAmountOutlet.text = ""
+        self.numFriendsOutlet.text = ""
+    }
     
     override func viewDidLoad() {
         // Anytime text fields are updated, check if you can update the result text label

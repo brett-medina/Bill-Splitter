@@ -17,10 +17,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     
+    @IBAction func backButton(_ sender: UIButton) {
+        self.dismiss(animated: false, completion: nil)
+        nameField.text = ""
+        emailField.text = ""
+        passwordField.text = ""
+    }
+    
     @IBAction func touchContinue(_ sender: UIButton) {
-        
-        
-        // TODO: push this data onto Firebase
         handleLogin()
         performSegue(withIdentifier: "paypalSetup", sender: self)
     }
