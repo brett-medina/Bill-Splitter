@@ -17,26 +17,12 @@ class ViewController: UIViewController {
     
     @IBAction func touchLogin(_ sender: UIButton) {
 
-        handleLogin()
+        performSegue(withIdentifier: "login", sender: self)
     }
     
     @IBAction func touchSignUp(_ sender: UIButton) {
     }
     
-    func handleLogin() {
-        guard let email = emailAddressField.text else {return}
-        guard let pass = passwordField.text else {return}
-        print("\(email)")
-        print("\(pass)")
-        Auth.auth().createUser(withEmail: email, password: pass) { user, error in
-            if error == nil && user != nil {
-                print("user created!")
-            } else {
-                print("Error creating user: \(error!.localizedDescription)")
-            }
-       }
-        performSegue(withIdentifier: "login", sender: self)
-    }
     override func viewDidLoad() {
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
         tap.cancelsTouchesInView = false

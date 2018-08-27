@@ -22,6 +22,9 @@ class DivideViewController: UIViewController {
         // Anytime text fields are updated, check if you can update the result text label
         totalAmountOutlet.addTarget(self, action: #selector(DivideViewController.calculate), for: UIControlEvents.editingChanged)
         numFriendsOutlet.addTarget(self, action: #selector(DivideViewController.calculate), for: UIControlEvents.editingChanged)
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
+        tap.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tap)
         super.viewDidLoad()
         // Do any additional setup after loading the view.
 

@@ -7,36 +7,42 @@
 //
 
 import UIKit
+import Firebase
 
 class SignUpViewController: UIViewController {
 
-    @IBOutlet weak var firstNameOutlet: UITextField!
-    @IBOutlet weak var lastNameOutlet: UITextField!
-    @IBOutlet weak var emailAddressOutlet: UITextField!
-    @IBOutlet weak var reenterEmailAddressOutlet: UITextField!
-    @IBOutlet weak var newPasswordOutlet: UITextField!
-    
+
+    @IBOutlet weak var nameField: UITextField!
+    @IBOutlet weak var emailField: UITextField!
+    @IBOutlet weak var passwordField: UITextField!
     
     @IBAction func touchContinue(_ sender: UIButton) {
-        if firstNameOutlet.text != nil && lastNameOutlet != nil && emailAddressOutlet.text != nil
-            && reenterEmailAddressOutlet.text != nil && newPasswordOutlet.text != nil {
-            let firstName = firstNameOutlet.text!
-            let lastName = lastNameOutlet.text!
-            
-            if emailAddressOutlet.text! == reenterEmailAddressOutlet.text {
-                let emailAddress = emailAddressOutlet.text!
-            }
-            let password = newPasswordOutlet.text!
-        }
+        
         
         // TODO: push this data onto Firebase
-        
-        
+        handleLogin()
         performSegue(withIdentifier: "paypalSetup", sender: self)
     }
+    
+    func handleLogin() {
+        guard let email = emailField.text else {return}
+        guard let pass = passwordField.text else {return}
+        Auth.auth().createUser(withEmail: email, password: pass) { user, error in
+            if error == nil && user != nil {
+                print("user created!")
+            } else {
+                print("Error creating user: \(error!.localizedDescription)")
+            }
+        }
+        
+    }
+    
     override func viewDidLoad() {
+        // Hide keyoard on UIView tap
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
+        tap.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tap)
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
     }
 
