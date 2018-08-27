@@ -1,0 +1,69 @@
+
+/* Class = "UILabel"; text = "Bill Splitter"; ObjectID = "6fk-De-Aqe"; */
+"6fk-De-Aqe.text" = "Bill Splitter";
+
+/* Class = "UILabel"; text = "Let's split the bill."; ObjectID = "DIy-IP-Jf7"; */
+"DIy-IP-Jf7.text" = "Let's split the bill.";
+
+/* Class = "UITextField"; placeholder = "new password"; ObjectID = "Ef5-eg-5wJ"; */
+"Ef5-eg-5wJ.placeholder" = "new password";
+
+/* Class = "UITextField"; placeholder = "last name"; ObjectID = "Fje-0S-mF8"; */
+"Fje-0S-mF8.placeholder" = "last name";
+
+/* Class = "UIButton"; normalTitle = "Continue"; ObjectID = "LZF-L1-P61"; */
+"LZF-L1-P61.normalTitle" = "Continue";
+
+/* Class = "UITextField"; placeholder = "email address"; ObjectID = "M6E-pW-xSy"; */
+"M6E-pW-xSy.placeholder" = "email address";
+
+/* Class = "UILabel"; text = "HALCYON"; ObjectID = "RnN-GO-pOJ"; */
+"RnN-GO-pOJ.text" = "HALCYON";
+
+/* Class = "UIButton"; normalTitle = "Sign Up"; ObjectID = "WoF-hg-W0q"; */
+"WoF-hg-W0q.normalTitle" = "Sign Up";
+
+/* Class = "UIButton"; normalTitle = "Continue"; ObjectID = "XF6-pd-Cpk"; */
+"XF6-pd-Cpk.normalTitle" = "Continue";
+
+/* Class = "UILabel"; text = "Each friend pays:"; ObjectID = "acw-2x-jhu"; */
+"acw-2x-jhu.text" = "Each friend pays:";
+
+/* Class = "UITextField"; placeholder = "first name"; ObjectID = "bEZ-DI-gGK"; */
+"bEZ-DI-gGK.placeholder" = "first name";
+
+/* Class = "UIButton"; normalTitle = "Continue"; ObjectID = "eDU-Kb-W2g"; */
+"eDU-Kb-W2g.normalTitle" = "Continue";
+
+/* Class = "UILabel"; text = "Paypal"; ObjectID = "g9S-eO-AcC"; */
+"g9S-eO-AcC.text" = "Paypal";
+
+/* Class = "UITextField"; placeholder = "number of friends to split between"; ObjectID = "hnd-bb-3SZ"; */
+"hnd-bb-3SZ.placeholder" = "number of friends to split between";
+
+/* Class = "UILabel"; text = "CO."; ObjectID = "kRb-0D-drc"; */
+"kRb-0D-drc.text" = "CO.";
+
+/* Class = "UILabel"; text = "$0.00"; ObjectID = "kW6-kW-hBW"; */
+"kW6-kW-hBW.text" = "$0.00";
+
+/* Class = "UITextField"; placeholder = "password"; ObjectID = "kWF-L6-M3w"; */
+"kWF-L6-M3w.placeholder" = "password";
+
+/* Class = "UITextField"; placeholder = "email address"; ObjectID = "mOA-i3-yko"; */
+"mOA-i3-yko.placeholder" = "email address";
+
+/* Class = "UITextField"; placeholder = "re-enter email address"; ObjectID = "meK-uH-eix"; */
+"meK-uH-eix.placeholder" = "re-enter email address";
+
+/* Class = "UILabel"; text = "Sign Up"; ObjectID = "nKR-Q4-feJ"; */
+"nKR-Q4-feJ.text" = "Sign Up";
+
+/* Class = "UITextField"; placeholder = "total amount"; ObjectID = "p2j-iM-VIg"; */
+"p2j-iM-VIg.placeholder" = "total amount";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "rXI-U5-asU"; */
+"rXI-U5-asU.normalTitle" = "Login";
+
+/* Class = "UILabel"; text = "Bill Splitter"; ObjectID = "vfb-uV-3KF"; */
+"vfb-uV-3KF.text" = "Bill Splitter";

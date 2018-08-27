@@ -6,28 +6,41 @@
 //  Copyright © 2018 Brett Medina. All rights reserved.
 //
 
+import Foundation
 import UIKit
+import Firebase
 
 class ViewController: UIViewController {
-
-    @IBOutlet weak var emailAddress: UITextField!
-    @IBOutlet weak var password: UITextField!
     
+    @IBOutlet weak var emailAddressField: UITextField!
+    @IBOutlet weak var passwordField: UITextField!
     
     @IBAction func touchLogin(_ sender: UIButton) {
-        if emailAddress.text != nil && password.text != nil {
-            //TODO: Check with Firebase for correct user name and password
-            let email = emailAddress.text
-            let password = emailAddress.text
-            
-            // Go to Let's split the bill view
-            performSegue(withIdentifier: "login", sender: self)
-        }
-        // TODO: push email and password into an engine class into Firebase
+
+        handleLogin()
     }
     
+    @IBAction func touchSignUp(_ sender: UIButton) {
+    }
     
+    func handleLogin() {
+        guard let email = emailAddressField.text else {return}
+        guard let pass = passwordField.text else {return}
+        print("\(email)")
+        print("\(pass)")
+        Auth.auth().createUser(withEmail: email, password: pass) { user, error in
+            if error == nil && user != nil {
+                print("user created!")
+            } else {
+                print("Error creating user: \(error!.localizedDescription)")
+            }
+       }
+        performSegue(withIdentifier: "login", sender: self)
+    }
     override func viewDidLoad() {
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
+        tap.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tap)
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }

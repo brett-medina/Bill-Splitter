@@ -1,23 +1,27 @@
 //
-//  LoggedInViewController.swift
+//  LaunchViewController.swift
 //  Bill Splitter
 //
-//  Created by Brett Medina on 8/24/18.
+//  Created by Brett Medina on 8/26/18.
 //  Copyright © 2018 Brett Medina. All rights reserved.
 //
 
 import UIKit
 
-class LoggedInViewController: UIViewController {
-    
-    var cashTotal: Integer
-    var numFriends: Integer
+class LaunchViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        // Do any additional setup after loading the view, typically from a nib.
+        
+        Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(timeToMoveOn), userInfo: nil, repeats: false)
+        
     }
+    
+    @objc func timeToMoveOn() {
+        self.performSegue(withIdentifier: "toLoginScreen", sender: self)
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
