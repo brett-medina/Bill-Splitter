@@ -16,6 +16,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
+    @IBOutlet weak var phoneNumberField: UITextField!
     
     @IBAction func backButton(_ sender: UIButton) {
         self.dismiss(animated: false, completion: nil)
@@ -26,26 +27,28 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func touchContinue(_ sender: UIButton) {
         handleLogin()
-        performSegue(withIdentifier: "paypalSetup", sender: self)
     }
     
     func handleLogin() {
         guard let email = emailField.text else {return}
         guard let pass = passwordField.text else {return}
         guard let userName = nameField.text else {return}
+        guard let phoneNumber = phoneNumberField.text else {return}
         
         Auth.auth().createUser(withEmail: email, password: pass) { user, error in
             if error == nil && user != nil {
                 print("user created!")
-                
                 let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
                 changeRequest?.displayName = userName
                 changeRequest?.commitChanges() { error in
                     if error == nil {
                         print("User display name changed!")
                     }
-                    
                 }
+                self.nameField.text = ""
+                self.emailField.text = ""
+                self.passwordField.text = ""
+                self.performSegue(withIdentifier: "toDivideView", sender: self)
             } else {
                 print("Error creating user: \(error!.localizedDescription)")
             }
