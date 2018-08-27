@@ -12,15 +12,15 @@ import FirebaseAuth
 
 class SignUpViewController: UIViewController, UITextFieldDelegate {
 
-
     @IBOutlet weak var nameField: UITextField!
+    @IBOutlet weak var userNameField: UITextField!
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var phoneNumberField: UITextField!
     
     @IBAction func backButton(_ sender: UIButton) {
         self.dismiss(animated: false, completion: nil)
-        nameField.text = ""
+        userNameField.text = ""
         emailField.text = ""
         passwordField.text = ""
     }
@@ -30,9 +30,10 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }
     
     func handleLogin() {
+        guard let name = nameField.text else {return}
         guard let email = emailField.text else {return}
         guard let pass = passwordField.text else {return}
-        guard let userName = nameField.text else {return}
+        guard let userName = userNameField.text else {return}
         guard let phoneNumber = phoneNumberField.text else {return}
         
         Auth.auth().createUser(withEmail: email, password: pass) { user, error in
@@ -45,7 +46,10 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                         print("User display name changed!")
                     }
                 }
-                self.nameField.text = ""
+                
+                let person = Account()
+                person.updateInfo(name: name, username: userName, phoneNumber: phoneNumber, emailAddress: email)
+                self.userNameField.text = ""
                 self.emailField.text = ""
                 self.passwordField.text = ""
                 self.performSegue(withIdentifier: "toDivideView", sender: self)
@@ -63,7 +67,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         self.view.addGestureRecognizer(tap)
         
         // Hide keyboard on return press
-        nameField.delegate = self
+        userNameField.delegate = self
         emailField.delegate = self
         passwordField.delegate = self
         
@@ -78,7 +82,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     // UITextFieldDelegate methods
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        nameField.resignFirstResponder()
+        userNameField.resignFirstResponder()
         emailField.resignFirstResponder()
         passwordField.resignFirstResponder()
         return true

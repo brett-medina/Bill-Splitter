@@ -10,11 +10,13 @@ import UIKit
 import FirebaseAuth
 import Firebase
 
+var numFriends: Int?
+var result: Double?
+
 class DivideViewController: UIViewController {
     
     var totalAmount: Double?
-    var numFriends: Int?
-    var result: Double?
+    var ready = false
     
     @IBOutlet weak var totalAmountOutlet: UITextField!
     @IBOutlet weak var numFriendsOutlet: UITextField!
@@ -26,6 +28,13 @@ class DivideViewController: UIViewController {
         self.totalAmountOutlet.text = ""
         self.numFriendsOutlet.text = ""
     }
+    
+    @IBAction func touchContinue(_ sender: UIButton) {
+        if ready {
+            performSegue(withIdentifier: "toMessagesView", sender: self)
+        }
+    }
+    
     
     override func viewDidLoad() {
         // Anytime text fields are updated, check if you can update the result text label
@@ -39,10 +48,6 @@ class DivideViewController: UIViewController {
 
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     @objc func calculate() {
         if (totalAmountOutlet.text != nil) {
@@ -58,6 +63,7 @@ class DivideViewController: UIViewController {
         if (totalAmount != nil && numFriends != nil) {
             result = totalAmount! / Double(numFriends!)
             resultOutlet.text = String(format: "$%.02f", result!)
+            ready = true
         }
     }
     
