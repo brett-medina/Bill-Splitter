@@ -20,11 +20,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func backButton(_ sender: UIButton) {
         self.dismiss(animated: false, completion: nil)
-        self.userNameField.text = ""
-        self.emailField.text = ""
-        self.passwordField.text = ""
-        self.nameField.text = ""
-        self.phoneNumberField.text = ""
+        self.clearTextFields()
     }
     
     @IBAction func touchContinue(_ sender: UIButton) {
@@ -38,10 +34,12 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         guard let userName = userNameField.text else {return}
         guard let phoneNumber = phoneNumberField.text else {return}
         
+        // FirebaseAuth creating a user
         Auth.auth().createUser(withEmail: email, password: pass) { user, error in
             if error == nil && user != nil {
                 print("user created!")
                 let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+                // FirebaseAuth displayName will be username from FirebaseDatabase
                 changeRequest?.displayName = userName
                 changeRequest?.commitChanges() { error in
                     if error == nil {
@@ -49,13 +47,10 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                     }
                 }
                 
+                // Account class will handle updating FirebaseDatabase
                 let person = Account()
                 person.updateInfo(name: name, username: userName, phoneNumber: phoneNumber, emailAddress: email)
-                self.userNameField.text = ""
-                self.emailField.text = ""
-                self.passwordField.text = ""
-                self.nameField.text = ""
-                self.phoneNumberField.text = ""
+                self.clearTextFields()
                 self.performSegue(withIdentifier: "toDivideView", sender: self)
             } else {
                 print("Error creating user: \(error!.localizedDescription)")
@@ -93,16 +88,13 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         phoneNumberField.resignFirstResponder()
         return true
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func clearTextFields() {
+        self.userNameField.text = ""
+        self.emailField.text = ""
+        self.passwordField.text = ""
+        self.nameField.text = ""
+        self.phoneNumberField.text = ""
     }
-    */
 
 }

@@ -20,8 +20,6 @@ class MessagesViewController: UIViewController, UITextFieldDelegate, MFMessageCo
         controller.dismiss(animated: true, completion: nil)
     }
     
-
-    
     var usernames: [String] = []
     var phoneNumbers: [String] = []
     var ref:DatabaseReference?
@@ -54,7 +52,7 @@ class MessagesViewController: UIViewController, UITextFieldDelegate, MFMessageCo
             return
         }
         
-        // Read from database
+        // You can' add yourself to the list
         if displayName == username {
             return
         }

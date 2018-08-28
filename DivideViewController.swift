@@ -25,25 +25,18 @@ class DivideViewController: UIViewController, UITextFieldDelegate {
     @IBAction func logoutButton(_ sender: UIButton) {
         try! Auth.auth().signOut()
         performSegue(withIdentifier: "toLogin", sender: self)
-        self.totalAmountOutlet.text = ""
-        self.numFriendsOutlet.text = ""
-        resultOutlet.text = "$0.00"
+        self.clearTextFields()
         ready = false
     }
     
     @IBAction func touchContinue(_ sender: UIButton) {
         if ready {
             performSegue(withIdentifier: "toMessagesView", sender: self)
-            totalAmountOutlet.text = ""
-            numFriendsOutlet.text = ""
-            resultOutlet.text = ""
+            self.clearTextFields()
         }
     }
     
-    
     override func viewDidLoad() {
-        self.totalAmountOutlet.text = ""
-        self.numFriendsOutlet.text = ""
         hideKeyboardOnViewPress()
         // Anytime text fields are updated, check if you can update the result text label
         totalAmountOutlet.addTarget(self, action: #selector(DivideViewController.calculate), for: UIControlEvents.editingChanged)
@@ -56,7 +49,6 @@ class DivideViewController: UIViewController, UITextFieldDelegate {
 
     }
 
-    
     @objc func calculate() {
         if (totalAmountOutlet.text != nil) {
             totalAmount = Double(totalAmountOutlet.text!)
@@ -84,15 +76,10 @@ class DivideViewController: UIViewController, UITextFieldDelegate {
         numFriendsOutlet.delegate = self
     }
     
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func clearTextFields() {
+        totalAmountOutlet.text = ""
+        numFriendsOutlet.text = ""
+        resultOutlet.text = "$0.00"
     }
-    */
 
 }
