@@ -20,9 +20,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func backButton(_ sender: UIButton) {
         self.dismiss(animated: false, completion: nil)
-        userNameField.text = ""
-        emailField.text = ""
-        passwordField.text = ""
+        self.userNameField.text = ""
+        self.emailField.text = ""
+        self.passwordField.text = ""
+        self.nameField.text = ""
+        self.phoneNumberField.text = ""
     }
     
     @IBAction func touchContinue(_ sender: UIButton) {
@@ -52,6 +54,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 self.userNameField.text = ""
                 self.emailField.text = ""
                 self.passwordField.text = ""
+                self.nameField.text = ""
+                self.phoneNumberField.text = ""
                 self.performSegue(withIdentifier: "toDivideView", sender: self)
             } else {
                 print("Error creating user: \(error!.localizedDescription)")
@@ -85,6 +89,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         userNameField.resignFirstResponder()
         emailField.resignFirstResponder()
         passwordField.resignFirstResponder()
+        nameField.resignFirstResponder()
+        phoneNumberField.resignFirstResponder()
         return true
     }
     

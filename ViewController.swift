@@ -23,6 +23,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func touchSignUp(_ sender: UIButton) {
         performSegue(withIdentifier: "createNewAccount", sender: self)
+        emailAddressField.text = ""
+        passwordField.text = ""
+        invalidLoginLabel.text = ""
     }
     
     override func viewDidLoad() {
@@ -49,6 +52,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         Auth.auth().signIn(withEmail: email, password: pass) { user, error in
             if (error == nil && user != nil) {
                 self.performSegue(withIdentifier: "login", sender: self)
+                self.invalidLoginLabel.text = ""
             } else {
                 self.invalidLoginLabel.text = "Invalid email and/or password"
             }

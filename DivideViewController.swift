@@ -13,7 +13,7 @@ import Firebase
 var numFriends: Int?
 var result: Double?
 
-class DivideViewController: UIViewController {
+class DivideViewController: UIViewController, UITextFieldDelegate {
     
     var totalAmount: Double?
     var ready = false
@@ -24,19 +24,26 @@ class DivideViewController: UIViewController {
     
     @IBAction func logoutButton(_ sender: UIButton) {
         try! Auth.auth().signOut()
-        self.dismiss(animated: false, completion: nil)
+        performSegue(withIdentifier: "toLogin", sender: self)
         self.totalAmountOutlet.text = ""
         self.numFriendsOutlet.text = ""
+        resultOutlet.text = "$0.00"
     }
     
     @IBAction func touchContinue(_ sender: UIButton) {
         if ready {
             performSegue(withIdentifier: "toMessagesView", sender: self)
+            totalAmountOutlet.text = ""
+            numFriendsOutlet.text = ""
+            resultOutlet.text = ""
         }
     }
     
     
     override func viewDidLoad() {
+        self.totalAmountOutlet.text = ""
+        self.numFriendsOutlet.text = ""
+        hideKeyboardOnViewPress()
         // Anytime text fields are updated, check if you can update the result text label
         totalAmountOutlet.addTarget(self, action: #selector(DivideViewController.calculate), for: UIControlEvents.editingChanged)
         numFriendsOutlet.addTarget(self, action: #selector(DivideViewController.calculate), for: UIControlEvents.editingChanged)
@@ -65,6 +72,14 @@ class DivideViewController: UIViewController {
             resultOutlet.text = String(format: "$%.02f", result!)
             ready = true
         }
+    }
+    
+    func hideKeyboardOnViewPress() {
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
+        tap.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tap)
+        totalAmountOutlet.delegate = self
+        numFriendsOutlet.delegate = self
     }
     
     

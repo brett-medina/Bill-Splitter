@@ -26,10 +26,10 @@ class Account {
         self.phoneNumber = phoneNumber
         self.emailAddress = emailAddress
         
-        databaseRef.child("users/\(userID!)/name").setValue(name)
-        databaseRef.child("users/\(userID!)/username").setValue(username)
-        databaseRef.child("users/\(userID!)/phoneNumber").setValue(phoneNumber)
-        databaseRef.child("users/\(userID!)/emailAddress").setValue(emailAddress)
+        databaseRef.child("users/\(username)/name").setValue(name)
+        databaseRef.child("users/\(username)/username").setValue(username)
+        databaseRef.child("users/\(username)/phoneNumber").setValue(phoneNumber)
+        databaseRef.child("users/\(username)/emailAddress").setValue(emailAddress)
     }
     
 }
