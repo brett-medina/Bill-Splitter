@@ -10,8 +10,17 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 import FirebaseAuth
+import MessageUI
 
-class MessagesViewController: UIViewController, UITextFieldDelegate {
+class MessagesViewController: UIViewController, UITextFieldDelegate, MFMessageComposeViewControllerDelegate {
+    
+    var displayName : String?
+    
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
+
     
     var usernames: [String] = []
     var phoneNumbers: [String] = []
@@ -21,6 +30,23 @@ class MessagesViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var userNameTextField: UITextField!
     var total: Int = 0
     
+    @IBAction func touchMessage(_ sender: UIButton) {
+        if (MFMessageComposeViewController.canSendText()) {
+                ref?.child("users").child(displayName!).observeSingleEvent(of: .value, with: {(snapshot) in
+                    let userObject = snapshot.value as? [String: AnyObject]
+                    let name = userObject?["name"] as! String
+                    
+                    let composeVC = MFMessageComposeViewController()
+                    composeVC.messageComposeDelegate = self
+                    composeVC.recipients = self.phoneNumbers
+                    composeVC.body = "Reminder! You owe \(name) $\(result!). Thanks bud!"
+                    
+                    self.present(composeVC, animated: true, completion: nil)
+                })
+            
+        }
+    }
+    
     @IBAction func touchAddButton(_ sender: UIButton) {
         guard let username = userNameTextField.text else {return}
         // don't enter more users than previously specified
@@ -29,6 +55,10 @@ class MessagesViewController: UIViewController, UITextFieldDelegate {
         }
         
         // Read from database
+        if displayName == username {
+            return
+        }
+        
         ref?.child("users").child(username).observeSingleEvent(of: .value, with: {(snapshot) in
             if snapshot.exists() {
                 // have to create a dict to get value from field
@@ -53,6 +83,11 @@ class MessagesViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         // Set the firebase reference
         ref = Database.database().reference()
+        let user = Auth.auth().currentUser
+        if let user = user {
+            displayName = user.displayName
+        }
+        
         if numFriends != nil {
             total = numFriends!
         }

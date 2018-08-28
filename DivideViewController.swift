@@ -11,7 +11,7 @@ import FirebaseAuth
 import Firebase
 
 var numFriends: Int?
-var result: Double?
+var result: String?
 
 class DivideViewController: UIViewController, UITextFieldDelegate {
     
@@ -28,6 +28,7 @@ class DivideViewController: UIViewController, UITextFieldDelegate {
         self.totalAmountOutlet.text = ""
         self.numFriendsOutlet.text = ""
         resultOutlet.text = "$0.00"
+        ready = false
     }
     
     @IBAction func touchContinue(_ sender: UIButton) {
@@ -68,8 +69,9 @@ class DivideViewController: UIViewController, UITextFieldDelegate {
     
     func showResult() {
         if (totalAmount != nil && numFriends != nil) {
-            result = totalAmount! / Double(numFriends!)
-            resultOutlet.text = String(format: "$%.02f", result!)
+            let resultDouble = totalAmount! / Double(numFriends!)
+            result = String(format: "%.02f", resultDouble)
+            resultOutlet.text = "$\(result!)"
             ready = true
         }
     }
