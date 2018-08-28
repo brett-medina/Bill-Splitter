@@ -20,10 +20,11 @@ class MessagesViewController: UIViewController, UITextFieldDelegate, MFMessageCo
         controller.dismiss(animated: true, completion: nil)
     }
     
-    var usernames: [String] = []
+    var usernameToFullname: [String:String] = [:]
     var phoneNumbers: [String] = []
     var ref:DatabaseReference?
     
+    @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var namesLabel: UILabel!
     @IBOutlet weak var userNameTextField: UITextField!
     var total: Int = 0
@@ -54,6 +55,8 @@ class MessagesViewController: UIViewController, UITextFieldDelegate, MFMessageCo
         
         // You can' add yourself to the list
         if displayName == username {
+            self.userNameTextField.text = ""
+            self.errorLabel.text = "You can't add yourself to the list."
             return
         }
         
@@ -62,20 +65,42 @@ class MessagesViewController: UIViewController, UITextFieldDelegate, MFMessageCo
                 // have to create a dict to get value from field
                 let userObject = snapshot.value as? [String: AnyObject]
                 let name = userObject?["name"] as! String
+                let username = userObject?["username"] as! String
                 let phoneNumber = userObject?["phoneNumber"] as! String
                 self.phoneNumbers.append(phoneNumber)
-                self.namesLabel.text = self.namesLabel.text! + name + "\n"
                 self.userNameTextField.text = ""
                 self.total = self.total - 1
+                self.usernameToFullname[username] = name
+                self.updateNames()
+                self.errorLabel.text = ""
+            } else {
+                self.errorLabel.text = "\(username) is not a user."
             }
             })
+    }
+    
+    @IBAction func touchRemove(_ sender: UIButton) {
+        guard let username = userNameTextField.text else {return}
+        if (usernameToFullname.removeValue(forKey: username) != nil) {
+            updateNames()
+            self.userNameTextField.text = ""
+            self.errorLabel.text = ""
+        } else {
+            if (username == "") {
+                self.errorLabel.text = "Enter a username."
+            } else {
+            self.errorLabel.text = "\(username) is not a user."
+            }
+        }
     }
     
     @IBAction func touchBack(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
         phoneNumbers.removeAll()
+        usernameToFullname.removeAll()
         namesLabel.text = ""
         userNameTextField.text = ""
+        errorLabel.text = ""
     }
     
     override func viewDidLoad() {
@@ -105,6 +130,14 @@ class MessagesViewController: UIViewController, UITextFieldDelegate, MFMessageCo
         tap.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tap)
         userNameTextField.delegate = self
+    }
+    
+    func updateNames() {
+        var temp = ""
+        for (_, fullname) in self.usernameToFullname {
+            temp += "\(fullname) \n"
+        }
+        self.namesLabel.text = temp
     }
     
 

@@ -12,6 +12,7 @@ import FirebaseAuth
 
 class SignUpViewController: UIViewController, UITextFieldDelegate {
 
+    @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var userNameField: UITextField!
     @IBOutlet weak var emailField: UITextField!
@@ -53,7 +54,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 self.clearTextFields()
                 self.performSegue(withIdentifier: "toDivideView", sender: self)
             } else {
-                print("Error creating user: \(error!.localizedDescription)")
+                self.errorLabel.text = ("Error creating user: \(error!.localizedDescription)")
             }
         }
         
@@ -95,6 +96,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         self.passwordField.text = ""
         self.nameField.text = ""
         self.phoneNumberField.text = ""
+        self.errorLabel.text = ""
     }
 
 }
