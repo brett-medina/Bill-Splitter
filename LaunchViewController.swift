@@ -10,6 +10,8 @@ import UIKit
 
 class LaunchViewController: UIViewController {
 
+    @IBOutlet weak var icon: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
